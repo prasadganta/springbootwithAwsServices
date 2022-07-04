@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techwithtony.sample.firstapp.model.Person;
+import com.techwithtony.sample.firstapp.services.PersonService;
 
 @RestController
 @Validated
 public class PostAndPutBodyReq {
 	
+	@Autowired
+	PersonService personService;
+	
 	@PostMapping(value="mypath/myendpoint/person",produces=MediaType.ALL_VALUE)
 	@ResponseBody
 	public ResponseEntity<String> personExample(@Valid @RequestBody Person person) {
 		
-
-        return ResponseEntity.ok("Person data is valid");
+		personService.personProcess(person);
+        return ResponseEntity.ok("Person Created successfully !!!");
 		
 	}
 	
